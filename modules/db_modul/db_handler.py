@@ -13,7 +13,7 @@ class DBHandler:
             with self.engine.connect() as conn:
                 conn.execute(text(query))
                 conn.commit()
-                logging.info("Sikeres lekérés")
+                logging.info("Sikeres művelet")
         except Exception as e:
             conn.rollback()
             logging.error(f"A Hiba: {str(e)}")
@@ -48,7 +48,7 @@ class DBHandler:
             with self.engine.connect() as conn:
                 conn.execute(text(query))
                 conn.commit()
-            logging.info("Sikeres művelet")
+            logging.info("Sikeres törlés")
         except Exception as e:
             conn.rollback()
             logging.error(f"A Hiba: {str(e)}")

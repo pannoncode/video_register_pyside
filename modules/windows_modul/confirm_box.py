@@ -1,3 +1,4 @@
+import PySide6.QtCore
 from PySide6.QtWidgets import QDialog, QLabel, QPushButton, QVBoxLayout
 
 
@@ -17,3 +18,18 @@ class Confirmbox(QDialog):
 
         self.yes_button.clicked.connect(self.accept)
         self.no_button.clicked.connect(self.reject)
+
+class BasicWarningPopUp(QDialog):
+    def __init__(self, title, message):
+        super().__init__()
+        self.setWindowTitle(title)
+        self.warning_message = QLabel(message)
+        self.ok_button = QPushButton("Rendben")
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.warning_message)
+        layout.addWidget(self.ok_button)
+        self.setLayout(layout)
+
+        self.ok_button.clicked.connect(self.accept)
+

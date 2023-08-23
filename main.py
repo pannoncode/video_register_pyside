@@ -10,11 +10,13 @@ from modules import (Ui_Form,
                      MyTableModel,
                      DBHandler,
                      Confirmbox,
-                     insert_data, select_all_data, delete_all_data, delete_row, create_table, update_row,
                      EditDialog,
                      ShowLink,
                      PopupDialog,
-                     EmptyDataBox)
+                     EmptyDataBox,
+                     BasicWarningPopUp,
+                     insert_data, select_all_data, delete_all_data, delete_row, create_table, update_row,
+                     )
 
 
 class MainWindow(QWidget):
@@ -110,9 +112,6 @@ class MainWindow(QWidget):
         data_title = self.ui.lineEditTitle.text()
         data_link = self.ui.lineEditLink.text()
 
-        # Ha a link végén "/" karakter van akkor nem működik link-ként a felugró ablakban megjelenő
-        # link, ezért megkeresen, hogy az utolsó helyen álló "/" egyenlő e a szöveg hosszával,   mert
-        # akkor le kell vágni
         end_foreign_char = data_link.rfind("/")
         data_link_len = len(data_link)-1
         if end_foreign_char == data_link_len:
@@ -121,8 +120,8 @@ class MainWindow(QWidget):
         data_description = self.ui.plainTextEditDescription.toPlainText()
 
         # üres mezők ellenőrzése
-        if not data_id or not data_date or not data_title or not data_link or not data_description:
-            conf_box = EmptyDataBox("Hiányzó adatok! Tölts ki minden mezőt!")
+        if not data_id or not data_date or not data_title or not data_link:
+            conf_box = EmptyDataBox("Hiányzó adatok! A Leírás mező kivételével minden mező kitöltése kötelező!")
             result = conf_box.exec()
             if result == QDialog.Accepted:
                 return
@@ -147,7 +146,12 @@ class MainWindow(QWidget):
         index = self.ui.tableViewData.selectionModel().selectedRows()
 
         if not index:
-            return
+            title = "Figyelmeztetés!"
+            message = "Nincs kijelölt sor amit törölni lehetne!"
+            warning_window = BasicWarningPopUp(title, message)
+            warning_result = warning_window.exec()
+            if warning_result == QDialog.Accepted:
+                return
 
         conf_box = Confirmbox(
             "Biztos, hogy törölni szeretnéd a kijelölt adatokat?")
