@@ -75,7 +75,7 @@ class MainWindow(QWidget):
         dialog.exec()
         result = dialog.ok_button_clicked()
 
-        with open("db_url.txt", "w") as file:
+        with open(f"{os.path.join(os.path.dirname(__file__),'db_url.txt')}", "w") as file:
             file.write(result)
 
     def read_url(self):
