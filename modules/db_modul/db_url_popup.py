@@ -1,11 +1,11 @@
 from PySide6.QtWidgets import QDialog, QLabel, QLineEdit, QVBoxLayout, QPushButton
 
 
-class PopupDialog(QDialog):
+class URLPopupDialog(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Felugró Ablak")
+        self.setWindowTitle("Adatbázis elérés")
         self.setGeometry(300, 300, 300, 150)
 
         self.init_ui()

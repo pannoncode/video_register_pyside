@@ -8,6 +8,7 @@ class EmptyDataBox(QDialog):
         self.message_label = QLabel(message)
         self.yes_button = QPushButton("Rendben")
 
+
         layout = QVBoxLayout()
         layout.addWidget(self.message_label)
         layout.addWidget(self.yes_button)

@@ -7,7 +7,7 @@ from .windows_modul import (Ui_Form,
                             BasicWarningPopUp)
 
 from .db_modul import (DBHandler, 
-                       PopupDialog, 
+                       URLPopupDialog, 
                        create_table, 
                        insert_data, 
                        select_all_data, 

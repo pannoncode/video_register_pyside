@@ -12,7 +12,7 @@ from modules import (Ui_Form,
                      Confirmbox,
                      EditDialog,
                      ShowLink,
-                     PopupDialog,
+                     URLPopupDialog,
                      EmptyDataBox,
                      BasicWarningPopUp,
                      insert_data, select_all_data, delete_all_data, delete_row, create_table, update_row,
@@ -71,7 +71,7 @@ class MainWindow(QWidget):
         if os.path.exists(file_path):
             if os.stat(file_path).st_size == 0:
                 print(os.stat(file_path).st_size == 0)
-                dialog = PopupDialog()
+                dialog = URLPopupDialog()
                 dialog.exec()
                 result = dialog.ok_button_clicked()
 
@@ -81,7 +81,7 @@ class MainWindow(QWidget):
         
             
         if not os.path.exists(file_path):
-            dialog = PopupDialog()
+            dialog = URLPopupDialog()
             dialog.exec()
             result = dialog.ok_button_clicked()
 
@@ -187,7 +187,12 @@ class MainWindow(QWidget):
         selected_row = self.ui.tableViewData.selectedIndexes()
 
         if not selected_row:
-            return
+            title = "Figyelmeztetés!"
+            message = "Nincs kijelölt sor amit szerkeszteni lehetne!"
+            warning_window = BasicWarningPopUp(title, message)
+            warning_result = warning_window.exec()
+            if warning_result == QDialog.Accepted:
+                return
 
         row_index = selected_row[0].row()
         item = self.table_model.table_data[row_index]
