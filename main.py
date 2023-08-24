@@ -69,14 +69,26 @@ class MainWindow(QWidget):
         file_path = os.path.join(os.path.dirname(__file__), "db_url.txt")
 
         if os.path.exists(file_path):
-            return
+            if os.stat(file_path).st_size == 0:
+                print(os.stat(file_path).st_size == 0)
+                dialog = PopupDialog()
+                dialog.exec()
+                result = dialog.ok_button_clicked()
 
-        dialog = PopupDialog()
-        dialog.exec()
-        result = dialog.ok_button_clicked()
+                with open(f"{os.path.join(os.path.dirname(__file__),'db_url.txt')}", "w") as file:
+                    file.write(result)
+                return
+        
+            
+        if not os.path.exists(file_path):
+            dialog = PopupDialog()
+            dialog.exec()
+            result = dialog.ok_button_clicked()
 
-        with open(f"{os.path.join(os.path.dirname(__file__),'db_url.txt')}", "w") as file:
-            file.write(result)
+            with open(f"{os.path.join(os.path.dirname(__file__),'db_url.txt')}", "w") as file:
+                file.write(result)
+
+
 
     def read_url(self):
         """
@@ -86,6 +98,7 @@ class MainWindow(QWidget):
 
         with open(path, "r") as url:
             result_url = url.read()
+            print(result_url)
         return str(result_url)
 
     def data_from_db(self, query):
